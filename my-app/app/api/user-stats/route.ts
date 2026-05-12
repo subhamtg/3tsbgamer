@@ -3,16 +3,17 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 const schema = z.object({
   id: z.string(),
 });
 
 export async function POST(request: Request) {
+  // Initialize Supabase inside the handler
+  const supabase = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
   const json = await request.json();
   const parse = schema.safeParse(json);
   if (!parse.success) {
