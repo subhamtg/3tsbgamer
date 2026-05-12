@@ -35,7 +35,7 @@ const StoryStatus = () => {
       name: "3TSB_KARAN⚠️",
       image: "https://i.ibb.co/h1ZkY0Lc/lv-0-20250718144547.gif",
       gradient: "from-indigo-500 to-cyan-400",
-      description: " loves design and art.",
+      description: " Is a gamer (ZORD_KARAN) and associate of 3TSB GAMER (VIP MEMBER 👑).",
       aboutImage: "https://i.ibb.co/gM0J2WhG/IMG-20250718-151607.jpg",
     },
     {
