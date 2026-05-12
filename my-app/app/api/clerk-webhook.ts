@@ -3,12 +3,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
-// Initialize Supabase with service role key (secure on server)
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 // Validate Clerk webhook payload for user.created
 const userCreatedSchema = z.object({
   data: z.object({
@@ -22,6 +16,12 @@ const userCreatedSchema = z.object({
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Initialize Supabase inside the handler
+  const supabase = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
   // Only accept POST
   if (req.method !== "POST") return res.status(405).end();
 
