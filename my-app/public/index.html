@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Subham Telegram Cloud ☁️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --bg-light: linear-gradient(135deg, #1f2937, #dc2626);
+            /* gray-900 to red-600 */
+            --bg-dark: linear-gradient(135deg, #000000, #111827);
+            /* black to slate-900 */
+            --form-bg-light: rgba(255, 255, 255, 0.08);
+            --form-bg-dark: rgba(0, 0, 0, 0.5);
+        }
+
+
+        form {
+            background: transparent;
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 320px;
+            transition: background 0.3s;
+        }
+
+        body.dark form {
+            background: transparent;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        form {
+            background: var(--form-bg-light);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.1);
+        }
+
+
+        body.dark form {
+            background: var(--form-bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        input,
+        textarea,
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        button {
+            background: linear-gradient(to right, #DC2424 0%, #4A569D  51%, #DC2424  100%);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: rgb(215, 10, 10);
+        }
+
+        #toggle-dark {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: #000;
+            color: #fff;
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        #toast {
+            position: absolute;
+            bottom: -60px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            display: none;
+            animation: fade 2s forwards;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid #fff;
+            border-top: 3px solid #d60e0e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loginForm {
+            display: none;
+        }
+
+        #userPage {
+            display: none;
+            font-size: 2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <button id="toggle-dark">🌙 Dark Mode</button>
+
+        <!-- Signup / Upload Form -->
+        <form id="uploadForm">
+            <h3>Register IN 3TSB GAMER</h3>
+            <input type="text" name="name" placeholder="Your Name" required />
+            <input type="text" name="username" placeholder="Unique Username" required />
+            <input type="email" name="email" placeholder="Your Email" required />
+            <input type="password" name="password" placeholder="Set a Password" required />
+            <textarea name="note" rows="3" placeholder="Your message (optional)"></textarea>
+            <button type="submit">Register & Upload</button>
+            <button type="button" id="loginBtn">🔐 Login</button>
+            <div class="spinner" id="spinner"></div>
+            <div id="toast"></div>
+        </form>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+            <h3>Login</h3>
+            <input type="text" name="username" placeholder="Username" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <button type="submit">Login Now</button>
+            <button type="button" onclick="backToUpload()">⬅️ Back</button>
+        </form>
+
+        <!-- User Welcome Page -->
+        <div id="userPage"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById("uploadForm");
+        const loginForm = document.getElementById("loginForm");
+        const userPage = document.getElementById("userPage");
+        const toast = document.getElementById("toast");
+        const spinner = document.getElementById("spinner");
+
+        const showToast = (msg, color = "#fff") => {
+            toast.textContent = msg;
+            toast.style.color = color;
+            toast.style.display = "block";
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 3000);
+        };
+
+        // Upload (Signup) Submit
+        form.onsubmit = async function (e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            spinner.style.display = "block";
+
+            try {
+                const res = await fetch("/api/upload", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const text = await res.text();
+                spinner.style.display = "none";
+                showToast(text, text.includes("✅") ? "#00ffcc" : "#ff5050");
+            } catch (err) {
+                spinner.style.display = "none";
+                showToast("❌ Error uploading file", "#f55");
+            }
+        };
+
+        // Show Login Form
+        document.getElementById("loginBtn").onclick = () => {
+            form.style.display = "none";
+            loginForm.style.display = "flex";
+        };
+
+        // Back to Signup
+        function backToUpload() {
+            loginForm.style.display = "none";
+            form.style.display = "flex";
+        }
+
+        // Login Submit
+        loginForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(loginForm);
+            formData.append("action", "login");
+
+            try {
+                const res = await fetch("/api/upload", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const text = await res.text();
+                if (text.includes("✅")) {
+                    loginForm.style.display = "none";
+                    userPage.style.display = "flex";
+                    userPage.innerText = text.replace("✅ Welcome ", "");
+                } else {
+                    showToast(text, "#ff5050");
+                }
+            } catch (err) {
+                showToast("❌ Login Failed", "#f55");
+            }
+        };
+
+        document.getElementById("toggle-dark").onclick = () => {
+            document.body.classList.toggle("dark");
+        };
+
+        form.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+                e.preventDefault();
+                form.requestSubmit();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
