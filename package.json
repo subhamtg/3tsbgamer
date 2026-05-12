@@ -1,7 +1,4 @@
 {
-  "scripts": {
-    "vercel-build": "cd my-app && npm install && npm run build"
-  },
   "dependencies": {
     "@clerk/clerk-react": "^5.38.0",
     "@clerk/nextjs": "^6.28.0"
