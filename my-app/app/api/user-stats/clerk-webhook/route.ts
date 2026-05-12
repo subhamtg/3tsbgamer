@@ -4,12 +4,6 @@ import { Webhook } from "svix";
 import { createClient } from "@supabase/supabase-js";
 
 
-// Initialize Supabase with service-role key
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 interface ClerkUserCreatedEvent {
   type: "user.created";
   data: {
@@ -22,6 +16,12 @@ interface ClerkUserCreatedEvent {
 }
 
 export async function POST(req: Request) {
+  // Initialize Supabase inside the handler
+  const supabase = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
   // Read raw body as text
   const payload = await req.text();
 
