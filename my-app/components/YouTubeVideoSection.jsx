@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import { ImageIcon } from "lucide-react";
 
 const SpotlightLive = () => {
-  const youtubeLink = "https://www.youtube.com/embed/Qcc-XCc_r2I?si=Z8uY5xhpneaMGbVC"; // Replace with your YouTube embed link or leave empty for fallback image
-  const fallbackImage = "https://play-lh.googleusercontent.com/PQh2f-nj0NtiwoF9SIDRRXsC-C4xUMDQeKY3BfbjtEeQ4n9ypc41HqXYA5j8a0qytZFq-AA0T6_q_L8ZZ8md5ZA=w526-h296-rw";
+  const youtubeLink = ""; // Replace with your YouTube embed link or leave empty for fallback image
+  const fallbackImage = "https://images.unsplash.com/photo-1779355962466-aa83afc4c8f6?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"; // Replace with your fallback image URL
 
   const embedUrl = youtubeLink || null;
 
