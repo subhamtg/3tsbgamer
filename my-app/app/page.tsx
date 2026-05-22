@@ -32,28 +32,36 @@ export default function YouTuberWebsite() {
   };
 
   useEffect(() => {
-    const fetchSubscribers = async () => {
-      const API_KEY = "AIzaSyDt_ousKbj1wV2B682vq7rY_vDGlt2ky_0";
-      const CHANNEL_ID = "UC-Dg8Tb7LsRNHWQk8Gy-dqA";
+  const fetchSubscribers = async () => {
+    const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+    const CHANNEL_ID = "UC-Dg8Tb7LsRNHWQk8Gy-dqA";
 
-      try {
-        const response = await fetch(
-          `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`
-        );
-        if (!response.ok)
-          throw new Error(`HTTP error! status: ${response.status}`);
-        const data = await response.json();
-        if (data.items?.[0]?.statistics?.subscriberCount) {
-          setSubscribers(Number(data.items[0].statistics.subscriberCount));
-        }
-      } catch (error) {
-        console.error("Failed to fetch subscriber count:", error);
+    if (!API_KEY) {
+      console.error("YouTube API key is missing");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`
+      );
+
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
+
+      const data = await response.json();
+
+      if (data.items?.[0]?.statistics?.subscriberCount) {
+        setSubscribers(Number(data.items[0].statistics.subscriberCount));
       }
-    };
+    } catch (error) {
+      console.error("Failed to fetch subscriber count:", error);
+    }
+  };
 
-    fetchSubscribers();
-    const interval = setInterval(fetchSubscribers, 10000);
-    return () => clearInterval(interval);
+  fetchSubscribers();
+  const interval = setInterval(fetchSubscribers, 10000);
+  return () => clearInterval(interval);
   }, []);
 
   // log in popup click outside handler
