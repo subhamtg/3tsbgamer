@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import StoryStatus from "@/components/ui/StoryStatus";
 import SpotlightLive from "@/components/YouTubeVideoSection";
+import YouTubeShortsSection from "@/components/YouTubeShortsSection"; 
 import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function YouTuberWebsite() {
@@ -146,6 +147,8 @@ export default function YouTuberWebsite() {
           </div>
         </motion.div>
       </section>
+      {/* YouTube Shorts sections */}
+      <YouTubeShortsSection />
 
       {/* Gallery / Behind-the-Scenes Section */}
       <section className="max-w-6xl mx-auto px-4 py-20">
