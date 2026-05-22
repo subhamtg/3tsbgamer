@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ImageIcon } from "lucide-react";
 
 const SpotlightLive = () => {
-  const youtubeLink = ""; // Replace with your YouTube embed link or leave empty for fallback image
+  const youtubeLink = "https://www.youtube.com/embed/grZ4yct1rGY?si=LnNxHm2plfleh56l"; // Replace with your YouTube embed link or leave empty for fallback image
   const fallbackImage = "https://images.unsplash.com/photo-1779355962466-aa83afc4c8f6?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"; // Replace with your fallback image URL
 
   const embedUrl = youtubeLink || null;
