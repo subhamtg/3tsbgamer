@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Youtube, Volume2, VolumeX, ChevronLeft, ChevronRight } from "lucide-react";
 
 const shortsVideos = [
-  "NykJGVRAhF829xJq",
+  "RR7D6HY92Gw",
   "Qcd4ZhzMG2o",
   "SvclAS4L0rU",
   "IfiNDIwurq8",
